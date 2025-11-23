@@ -1,7 +1,7 @@
-from yogi import read
+import sys
 from collections import deque
-from sys import maxsize
 from time import time
+from yogi import read
 
 start_time = 0.0
 
@@ -85,9 +85,13 @@ class SolucioParcial:
 
 def write_sol(sol: list[int], cost: int) -> None:
     global start_time
-    print("Cost:", cost)
-    print("Temps:", time() - start_time)
-    print("Millor solució:", sol)
+    if len(sys.argv) == 1:
+        print(cost, time() - start_time)
+        print(" ".join(str(x) for x in sol))
+    else:
+        with open(sys.argv[1],"w") as f:    
+            print(cost, time() - start_time,file=f)
+            print(" ".join(str(x) for x in sol),file=f)
 
 
 def min_cost_rec(s: SolucioParcial, best_cost: int, best_sol: list[int]) -> tuple[int, list[int]]:
@@ -122,7 +126,7 @@ def main() -> None:
 
     start_time = time()
     entrada = SolucioParcial(c, m, k, c_e, n_e, produccions, classes)
-    cost, sol = min_cost_rec(entrada, maxsize, [])
+    cost, sol = min_cost_rec(entrada, sys.maxsize, [])
 
 if __name__ == "__main__":
     main()  
