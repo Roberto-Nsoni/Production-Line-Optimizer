@@ -1,9 +1,9 @@
 import subprocess
 import os
 
-TEST_FILE = "exh_lb"
+TEST_FILE = "greedy.py"
 BENCH_DIR = "public_benchs"
-OPT_FILE = "results.txt"
+OPT_FILE = "results_greedy.txt"
 TMP_OUT = "tmp.txt"
 
 def load_results():

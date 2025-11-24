@@ -1,5 +1,4 @@
 import sys
-from collections import deque
 from time import time
 from yogi import read
 
@@ -85,12 +84,15 @@ class SolucioParcial:
 
 def write_sol(sol: list[int], cost: int) -> None:
     global start_time
+    # Si no pones archivo de salida se escribe por pantalla
     if len(sys.argv) == 1:
         print(cost, time() - start_time)
         print(" ".join(str(x) for x in sol))
+
+    # Sino se sobreescribe el archivo de salida
     else:
         with open(sys.argv[1],"w") as f:    
-            print(cost, time() - start_time,file=f)
+            print(cost, round(time() - start_time, 1),file=f)
             print(" ".join(str(x) for x in sol),file=f)
 
 
@@ -126,7 +128,7 @@ def main() -> None:
 
     start_time = time()
     entrada = SolucioParcial(c, m, k, c_e, n_e, produccions, classes)
-    cost, sol = min_cost_rec(entrada, sys.maxsize, [])
+    min_cost_rec(entrada, sys.maxsize, [])
 
 if __name__ == "__main__":
     main()  
