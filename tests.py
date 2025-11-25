@@ -1,10 +1,12 @@
+# pyright: basic
 import subprocess
 import os
 
-TEST_FILE = "greedy.py"
-BENCH_DIR = "public_benchs"
-OPT_FILE = "results_greedy.txt"
-TMP_OUT = "tmp.txt"
+### MODIFICAR LAS COSTANTES DE ABAJO SEGUN CONVENGA ###
+TEST_FILE = "exh_lb" # Archivo que se quiera provar .py (o vacío para codon)
+BENCH_DIR = "public_benchs" # Carpeta donde estan las pruebas
+OPT_FILE = "results_exh.txt" # Archivo donde se quieran guardar/comparar las respuestas
+TMP_OUT = "tmp.txt" # Archivo donde se guardarán temporalmente los outputs de TEST_FILE
 
 def load_results():
     """
@@ -68,7 +70,6 @@ def main():
 
             # Validar con checker
             cmd_checker = f"./checker {inst_path} {TMP_OUT}"
-            print(f"[INFO] Ejecutando checker...")
 
             result = subprocess.run(
                 cmd_checker,
@@ -99,12 +100,11 @@ def main():
 
             # Si existe, comparar
             real_cost = optimal[inst_name]
-            print(f"[INFO] Coste óptimo registrado: {real_cost}")
 
             if found_cost == real_cost:
                 print("[OK] Coste correcto ✓")
             else:
-                print("[WRONG] Coste incorrecto ✗")
+                print("[ERROR] Coste incorrecto ✗", f"{found_cost} != {real_cost}")
 
     # Eliminar archivo temporal
     subprocess.run(
