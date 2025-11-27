@@ -44,14 +44,14 @@ class SolucioParcial:
             if self.classes[x][i]:
                 self.x_in_window[i] += 1
 
-            self.cost += max(0, self.x_in_window[i] - self.c_e[i])
+            self.cost += max(0, self.x_in_window[i] - self.c_e[i]) #####
     
     def cooler_pop(self) -> None:
         """Elimina el ultimo elemento de la solucion parcial y actualiza las ventanas y los costes adecuadamente"""
         x = self.sol[-1]
         act = len(self.sol) - 1
         for i in range(self.m):
-            self.cost -= max(0, self.x_in_window[i] - self.c_e[i])
+            self.cost -= max(0, self.x_in_window[i] - self.c_e[i]) 
 
             # Mirar si el que vuelve a entrar tenia la mejora
             last = act - self.n_e[i]
@@ -82,7 +82,7 @@ class SolucioParcial:
         """..."""
         lb = self.cost
         for i in range(self.m):
-            me_paso = max(0, self.x_in_window[i] - self.c_e[i])
+            me_paso = max(0, self.x_in_window[i] - self.c_e[i] - 1) #### Aqui estaba el conteo doble
             lb += (me_paso) * (me_paso + 1) // 2
             
         return lb

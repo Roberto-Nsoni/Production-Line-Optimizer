@@ -1,0 +1,3 @@
+Eliminar parametros innecesarios para la classe SolucioParcial
+Redondear bien el tiempo cuando escribes una respuesta
+En exhaustive reordenar el range para que busque soluciones un poco mejoress

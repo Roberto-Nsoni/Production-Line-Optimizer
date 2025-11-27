@@ -1,14 +1,8 @@
-"""
-1) Mirar linea 98, por si quieres mirar exactamente qué y dónde falla
-2) Mirar linea 56 y 101, si no es ese el error necesito que me expliques cual es la diferencia jeje
-"""
-
 import sys
 from time import time
 from yogi import read
 
 start_time = 0.0
-recur = 0
 
 class SolucioParcial:
     c: int
@@ -53,7 +47,7 @@ class SolucioParcial:
                 self.x_in_window[i] += 1
                 self.rem_upgrades[i] -= 1
 
-            self.cost += max(0, self.x_in_window[i] - self.c_e[i]) ### <<< conteo doble (¿?)
+            self.cost += max(0, self.x_in_window[i] - self.c_e[i])
     
     def cooler_pop(self) -> None:
         """Elimina el ultimo elemento de la solucion parcial y actualiza las ventanas y los costes adecuadamente"""
@@ -94,21 +88,18 @@ class SolucioParcial:
         rem_len = self.c - len(self.sol)
 
         for i in range(self.m):
-            # if recur == 17367 and (i == 3 or i == 11): 
-            #    pass <<<<<<< puedes poner un way-point con el debugger y poner public_benchs/med-8.txt
-
             # Exceso actual
-            me_paso = max(0, self.x_in_window[i] - self.c_e[i]) ### <<< conteo doble (¿?)
+            me_paso = max(0, self.x_in_window[i] - self.c_e[i] - 1)
             lb += me_paso * (me_paso + 1) // 2
 
             # Clases restantes
-            complete_sets = self.n_e[i] * max(0, (self.rem_upgrades[i] // self.c_e[i]) - 1)
+            complete_sets = self.n_e[i] * max(0, (self.rem_upgrades[i] // self.c_e[i]))
             rest = self.rem_upgrades[i] % self.c_e[i]
 
             if complete_sets == 0:
                 partial_sets = rest
             else:
-                partial_sets = self.c_e[i] if rest == 0 else self.n_e[i] + rest
+                partial_sets = -(self.n_e[i] - self.c_e[i]) if rest == 0 else rest
 
             lb += max(0, (complete_sets + partial_sets) - rem_len)
 
@@ -129,8 +120,6 @@ def write_sol(sol: list[int], cost: int) -> None:
             print(" ".join(str(x) for x in sol),file=f)
 
 def min_cost_rec(s: SolucioParcial, best_cost: int, best_sol: list[int]) -> tuple[int, list[int]]:
-    global recur
-    recur += 1
 
     if len(s.sol) == s.c:
         added_cost = s.end_sol()
@@ -164,6 +153,6 @@ def main() -> None:
     start_time = time()
     entrada = SolucioParcial(c, m, k, c_e, n_e, produccions, classes)
     min_cost_rec(entrada, sys.maxsize, [])
-    
+
 if __name__ == "__main__":
     main()  
