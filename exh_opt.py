@@ -93,7 +93,7 @@ class SolucioParcial:
             lb += me_paso * (me_paso + 1) // 2
 
             # Clases restantes
-            complete_sets = self.n_e[i] * max(0, (self.rem_upgrades[i] // self.c_e[i]))
+            complete_sets = self.n_e[i] * (self.rem_upgrades[i] // self.c_e[i]) # c_e puede ser cero?
             rest = self.rem_upgrades[i] % self.c_e[i]
 
             if complete_sets == 0:
