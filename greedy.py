@@ -2,7 +2,7 @@ import sys
 from time import time
 from yogi import read
 
-start_time = 0.0
+start_time = time()
 UNDEF = -1
 
 class SolucioParcial:
@@ -35,7 +35,7 @@ class SolucioParcial:
         self.rem_upgrades = [sum(produccions[i]*classes[i][j] for i in range(self.k)) for j in range(self.m)]
         self.risks = []
         for x in range(self.k):
-            p = 1
+            p = 1.0
             for i in range(self.m):
                 if self.classes[x][i]:
                     p *= self.c_e[i]/self.n_e[i]
@@ -91,7 +91,7 @@ class SolucioParcial:
             return self.risks[x]
 
         costs = [cost(x) for x in range(self.k)]
-        max_cost = max(costs) or 1
+        max_cost = max(costs) or 1.0
         costs = [i /max_cost for i in costs]
 
         for x in range(self.k):
@@ -116,7 +116,7 @@ def write_sol(sol: list[int], cost: int) -> None:
     global start_time
     # Si no pones archivo de salida se escribe por pantalla
     if len(sys.argv) == 1:
-        print(cost, time() - start_time)
+        print(cost, round(time() - start_time, 1))
         print(" ".join(str(x) for x in sol))
 
     # Sino se sobreescribe el archivo de salida
@@ -132,7 +132,7 @@ def greedy_min_cost(s: SolucioParcial, a: float, b: float, c: float) -> None:
         s.append(x)
     s.end_sol()
 
-    write_sol(s.sol, s.cost)
+    # write_sol(s.sol, s.cost)
 
 
 def main() -> None:

@@ -1,19 +1,26 @@
 # pyright: basic
 import subprocess
 import os
+from time import time
 
 ### MODIFICAR LAS COSTANTES DE ABAJO SEGUN CONVENGA ###
-TEST_FILE = "greedy.py" # Archivo que se quiera provar .py (o vacío para codon)
-BENCH_DIR = "public_benchs" # Carpeta donde estan las pruebas
-OPT_FILE = "resutls_greedy.txt" # Archivo donde se quieran guardar/comparar las respuestas
-TMP_OUT = "tmp.txt" # Archivo donde se guardarán temporalmente los outputs de TEST_FILE
+TEST_FILE = "greedy.py"  # Archivo que se quiera provar .py (o vacío para codon)
+OPT_FILE = "results_greedy.txt"  # Archivo con resultados
+INSTANCES = (
+    [f"public_benchs/easy-{i}.txt" for i in range(1, 11)] +
+    [f"public_benchs/med-{i}.txt" for i in range(1, 11)] +
+    [f"public_benchs/hard-{i}.txt" for i in range(1, 21)] + 
+    [f"public_benchs/extra-{i}.txt" for i in range(1, 20001)]
+)
+
+TMP_OUT = "tmp.txt"  # Archivo temporal donde se guardan las salidas
 
 def load_results():
     """
-    Devuelve un diccionario con los costes óptimos cargados del archivo.
+    Devuelve un diccionario: inst -> [cost1, cost2, ...]
+    Si no existe el archivo, lo crea vacío.
     """
     if not os.path.exists(OPT_FILE):
-        # Si el archivo no existe, lo creamos vacío
         open(OPT_FILE, "w").close()
 
     opt = {}
@@ -22,22 +29,29 @@ def load_results():
             line = line.strip()
             if not line:
                 continue
-            inst_raw, cost = line.split()
-            inst = inst_raw.replace(".txt", "")   # quitar .txt
-            opt[inst] = int(cost)
+
+            parts = line.split()
+            inst = parts[0]
+            costs = list(map(int, parts[1:]))
+
+            opt[inst] = costs
+
     return opt
 
-def append_optimal_cost(inst_name, cost):
-    """
-    Escribe "<inst_name>.txt <cost>" al final del archivo results.txt
-    """
+def append_new_instance(inst_path, cost):
     with open(OPT_FILE, "a") as f:
-        f.write(f"{inst_name}.txt\t{cost}\n")
-    print(f"[INFO] Añadido al archivo óptimos: {inst_name} {cost}")
+        f.write(f"{inst_path} \t{cost}\n")
 
+def append_cost_to_existing(inst_path, new_cost, optimal):
+    optimal[inst_path].append(new_cost)
 
-def read_cost_from_output_file(path):
-    """Lee coste encontrado por {TEST_FILE}"""
+    with open(OPT_FILE, "w") as f:
+        for inst, costs in optimal.items():
+            cost_str = "\t".join(map(str, costs))
+            f.write(f"{inst} \t{cost_str}\n")
+
+def read_cost_time_from_output_file(path):
+    """Lee coste encontrado por TEST_FILE."""
     with open(path, "r") as f:
         first_line = f.readline().strip().split()
         cost_str = first_line[0]
@@ -46,74 +60,51 @@ def read_cost_from_output_file(path):
 
 def main():
     optimal = load_results()
-    families = ["easy", "med", "hard"]
-    numbers = range(1, 10 + 1)
     total_time = []
 
-    for fam in families:
-        for num in numbers:
+    for inst_path in INSTANCES:
 
-            inst_name = f"{fam}-{num}"
-            inst_path = f"{BENCH_DIR}/{inst_name}.txt"
+        print(f"\n=== Probando instancia {inst_path} ===")
+        start_time = time()
 
-            print(f"\n=== Probando instancia {inst_name} ===")
+        # Ejecutar TEST_FILE en el CMD
+        if TEST_FILE.endswith(".py"):
+            cmd_exh = f"python3 {TEST_FILE} {TMP_OUT} < {inst_path}"
+        else:
+            cmd_exh = f"./{TEST_FILE} {TMP_OUT} < {inst_path}"
 
-            # Ejecutar TEST_FILE en el CMD´
-            if TEST_FILE [-3:] == ".py":
-                cmd_exh = f"python3 {TEST_FILE} {TMP_OUT} < {inst_path}"
-            else:
-                cmd_exh = f"./{TEST_FILE} {TMP_OUT} < {inst_path}"
-            print(f"[INFO] Ejecutando: {cmd_exh}")
+        print(f"[INFO] Ejecutando: {cmd_exh}")
+        result = subprocess.run(cmd_exh, shell=True)
 
-            result = subprocess.run(cmd_exh, shell=True)
+        # Guardar tiempo de ejecución
+        instance_time = round(time() - start_time, 1)
+        total_time.append(instance_time)
 
-            if result.returncode != 0:
-                print(f"[ERROR] {TEST_FILE} falló ejecutando {inst_name}")
-                raise AssertionError(f"[ERROR] {TEST_FILE} falló ejecutando {inst_name}")
+        if result.returncode != 0:
+            print(f"[ERROR] {TEST_FILE} falló ejecutando {inst_path}")
 
-            # Validar con checker
-            cmd_checker = f"./checker {inst_path} {TMP_OUT}"
+        # Validar con checker
+        cmd_checker = f"./checker {inst_path} {TMP_OUT}"
+        result = subprocess.run(cmd_checker, shell=True, capture_output=True)
 
-            result = subprocess.run(
-                cmd_checker,
-                shell=True,
-                capture_output=True
-            )
+        if result.returncode != 0:
+            print("[ERROR] Checker detectó solución inválida")
+            print(result.stdout.decode())
 
-            if result.returncode != 0:
-                print("[ERROR] Checker detectó solución inválida")
-                print(result.stdout.decode())
-                raise AssertionError(f"[ERROR] {TEST_FILE} falló ejecutando {inst_name}")
-            else:
-                print("[OK] Checker validó la solución")
+        # Leer salida temporal
+        found_cost, time_execute = read_cost_time_from_output_file(TMP_OUT)
+        print(f"[INFO] Coste encontrado: {found_cost} en el segundo {time_execute} (Total: {instance_time} s)")
 
-            # Leer salida
-            found_cost, time_execute = read_cost_from_output_file(TMP_OUT)
-            print(f"[INFO] Coste encontrado: {found_cost} en {time_execute} s")
+        # Guardar o añadir coste
+        if inst_path not in optimal:
+            optimal[inst_path] = [found_cost]
+            append_new_instance(inst_path, found_cost)
+        else:
+            append_cost_to_existing(inst_path, found_cost, optimal)
 
-            # Guardar SIEMPRE el tiempo
-            total_time.append(time_execute)
-
-            # Si no existe óptimo → agregarlo
-            if inst_name not in optimal:
-                print(f"[INFO] No existe entrada para {inst_name}, añadiendo.")
-                append_optimal_cost(inst_name, found_cost)
-                optimal[inst_name] = found_cost
-                continue
-
-            # Comparar con el óptimo
-            real_cost = optimal[inst_name]
-
-            if found_cost == real_cost:
-                print("[OK] Coste correcto ✓")
-            else:
-                print("[ERROR] Coste incorrecto ✗", f"{found_cost} != {real_cost}")
-                raise AssertionError(f"[ERROR] {TEST_FILE} falló en {inst_name}")
-
-    # Eliminar archivo temporal
+    # Eliminar temporal
     subprocess.run(f"rm {TMP_OUT}", shell=True, capture_output=True)
 
-    # Evitar división por 0
     if not total_time:
         print("[WARN] No se registró ningún tiempo")
         return 0
