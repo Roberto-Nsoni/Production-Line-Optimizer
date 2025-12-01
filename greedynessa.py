@@ -106,10 +106,10 @@ def write_sol(sol: list[int], cost: int) -> None:
 
 
 def priority(s: SolucioParcial, candidats: list[int]) -> int:
-    return max(candidats, key=lambda x: 0.25*s.produccions[x]/s.c + 1.0*s.risc[x] -1.0*s.mejoras_prob[x])
+    return max(candidats, key=lambda x: 0.1*s.produccions[x]/s.c + 1.0*s.risc[x] +0.0*s.mejoras_prob[x])
 
 def greedy_min_cost2(s: SolucioParcial) -> None:
-    for _ in range(s.c):
+    for x in range(s.c):
 
         costs = [s.calc_cost(x) if s.produccions[x] > 0 else sys.maxsize for x in range(s.k)]
         min_punt = min(costs)
