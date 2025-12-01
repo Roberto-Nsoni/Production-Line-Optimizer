@@ -3,9 +3,9 @@ import subprocess
 import os
 
 ### MODIFICAR LAS COSTANTES DE ABAJO SEGUN CONVENGA ###
-TEST_FILE = "exh_opt" # Archivo que se quiera provar .py (o vacío para codon)
+TEST_FILE = "greedynessa" # Archivo que se quiera provar .py (o vacío para codon)
 BENCH_DIR = "public_benchs" # Carpeta donde estan las pruebas
-OPT_FILE = "results_tmp.txt" # Archivo donde se quieran guardar/comparar las respuestas
+OPT_FILE = "nessa.txt" # Archivo donde se quieran guardar/comparar las respuestas
 TMP_OUT = "tmp.txt" # Archivo donde se guardarán temporalmente los outputs de TEST_FILE
 
 def load_results():
@@ -46,8 +46,7 @@ def read_cost_from_output_file(path):
 
 def main():
     optimal = load_results()
-
-    families = ["extra"]
+    families = ["easy", "med", "hard"]
     numbers = range(1, 10 + 1)
     total_time = []
 
@@ -59,8 +58,11 @@ def main():
 
             print(f"\n=== Probando instancia {inst_name} ===")
 
-            # Ejecutar TEST_FILE en el CMD
-            cmd_exh = f"./{TEST_FILE} {TMP_OUT} < {inst_path}"
+            # Ejecutar TEST_FILE en el CMD´
+            if TEST_FILE [-3:] == ".py":
+                cmd_exh = f"python3 {TEST_FILE} {TMP_OUT} < {inst_path}"
+            else:
+                cmd_exh = f"./{TEST_FILE} {TMP_OUT} < {inst_path}"
             print(f"[INFO] Ejecutando: {cmd_exh}")
 
             result = subprocess.run(cmd_exh, shell=True)
