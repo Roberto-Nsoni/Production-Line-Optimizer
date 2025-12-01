@@ -3,9 +3,9 @@ import subprocess
 import os
 
 ### MODIFICAR LAS COSTANTES DE ABAJO SEGUN CONVENGA ###
-TEST_FILE = "greedynessa" # Archivo que se quiera provar .py (o vacío para codon)
+TEST_FILE = "greedy.py" # Archivo que se quiera provar .py (o vacío para codon)
 BENCH_DIR = "public_benchs" # Carpeta donde estan las pruebas
-OPT_FILE = "nessa.txt" # Archivo donde se quieran guardar/comparar las respuestas
+OPT_FILE = "resutls_greedy.txt" # Archivo donde se quieran guardar/comparar las respuestas
 TMP_OUT = "tmp.txt" # Archivo donde se guardarán temporalmente los outputs de TEST_FILE
 
 def load_results():
