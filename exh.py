@@ -5,7 +5,7 @@ from yogi import read
 
 start_time = 0.0
 
-class SolucioParcial:
+class PartialSolution:
     """
     Clase que almacena una solución parcial del problema durante una búsqueda
     exhaustiva que construye la secuencia de coches de forma incremental.
@@ -47,7 +47,7 @@ class SolucioParcial:
         self.c = c
         self.c_e = c_e
         self.n_e = n_e
-        self.remaining_cars = produccions
+        self.remaining_cars = produccions[:]
         self.classes = classes
         self.sol = []
         self.cost = 0
@@ -178,7 +178,7 @@ def write_sol(sol: list[int], cost: int) -> None:
 
 
 
-def min_cost_rec(s: SolucioParcial, best_cost: int, best_sol: list[int]) -> tuple[int, list[int]]:
+def min_cost_rec(s: PartialSolution, best_cost: int, best_sol: list[int]) -> tuple[int, list[int]]:
     """
     Calcula de forma exhaustiva la mejor solución para el problema dada una solución parcial s.
     Sobreescribe en el fichero indicado por línea de comandos la mejor solución encontrada hasta el momento.
@@ -222,8 +222,8 @@ def main() -> None:
         classes.append([read(int) for _ in range(m)])
 
     start_time = time()
-    entrada = SolucioParcial(c, m, k, c_e, n_e, produccions, classes)
-    min_cost_rec(entrada, sys.maxsize, [])
+    s = PartialSolution(c, m, k, c_e, n_e, produccions, classes)
+    min_cost_rec(s, sys.maxsize, [])
 
 if __name__ == "__main__":
     main()  
