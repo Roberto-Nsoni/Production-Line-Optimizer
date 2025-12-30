@@ -6,7 +6,7 @@ MAX_C = 100 # Máxima c que se pueda generar
 MAX_M = 50 # Máxima m que se pueda generar
 MAX_K = 10 # Máxima k que se pueda generar
 
-BORRAR = False # 'False' si quieres generar las entradas, 'True' si las quieres eliminar pero has creado tantas que te da palo hacerlo a mano
+BORRAR = True # 'False' si quieres generar las entradas, 'True' si las quieres eliminar pero has creado tantas que te da palo hacerlo a mano
 
 def random_biased(c):
     # Parámetros adaptativos:
