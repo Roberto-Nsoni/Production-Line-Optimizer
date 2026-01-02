@@ -4,13 +4,12 @@ import os
 from time import time
 
 ### MODIFICAR LAS COSTANTES DE ABAJO SEGUN CONVENGA ###
-TEST_FILE = "greedy_ordenado"  # Archivo que se quiera provar .py (o vacío para codon)
-OPT_FILE = "results_greedy.txt"  # Archivo con resultados
+TEST_FILE = "mh_copy"  # Archivo que se quiera provar .py (o vacío para codon)
+OPT_FILE = "results_mh1min.txt"  # Archivo con resultados
 INSTANCES = (
-    [f"public_benchs/easy-{i}.txt" for i in range(1, 11)] +
-    [f"public_benchs/med-{i}.txt" for i in range(1, 11)] +
-    [f"public_benchs/hard-{i}.txt" for i in range(1, 21)] + 
-    [f"public_benchs/extra-{i}.txt" for i in range(1, 201)]
+    # [f"public_benchs/easy-{i}.txt" for i in range(1, 11)] +
+    # [f"public_benchs/med-{i}.txt" for i in range(1, 11)] +
+    [f"public_benchs/hard-{i}.txt" for i in range(1, 21)]
 )
 
 TMP_OUT = "tmp.txt"  # Archivo temporal donde se guardan las salidas

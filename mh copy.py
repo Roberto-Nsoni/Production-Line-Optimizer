@@ -1,14 +1,18 @@
 import sys
+import random
+import math
 from time import time
+from typing import Optional
 from yogi import read
 
 start_time = 0.0
 
-class GreedyConstructor:
+class GraspConstructor:
     """
-    Clase que construye una solución greedy para el problema.
-    Permite construir una solución razonablemente buena a partir 
-    de asignar una función de penalización.
+    Clase que ayuda a la implementación de una metaheurística GRASP
+    para el problema. Proporciona una función de penalización para
+    construir una lista de candidatos y una función para alterar la
+    solución actual.
 
     c: número total de coches que debe tener la solución final
     c_e: para cada mejora i, número máximo de coches que pueden tener
@@ -27,7 +31,6 @@ class GreedyConstructor:
     espaciados se debería dejar los coches para no generar coste. Valores cercanos
     a 1 indican clases más conflictivas que conviene espaciar.
     """
-    
     # Datos del problema
     c: int
     c_e: list[int]
@@ -54,7 +57,7 @@ class GreedyConstructor:
         self.sol = []
         self.cost = 0
         self.cars_in_window = [0] * m
-
+        
         # Calcular riesgos
         self.risks = []
         for x in range(self.k):
@@ -63,8 +66,7 @@ class GreedyConstructor:
                 if self.classes[x][i]:
                     p *= self.c_e[i]/self.n_e[i]
             self.risks.append(1 - p)
-            
-
+    
     def cooler_append(self, x: int) -> None:
         """Añade un coche de clase x a la solucion parcial y actualiza las ventanas y los costes adecuadamente"""
         self.sol.append(x)
@@ -143,6 +145,47 @@ class GreedyConstructor:
 
                 self.cost += max(0, x_in_window[i] - self.c_e[i])
 
+
+    def recaculate_cost(self) -> None:
+        """
+        Recalcula el coste total de toda la solucion (incluido el end_sol).
+        Actualiza self.cost y self.cars_in_window adecuadamente.
+        """
+
+        cost = 0
+        cars_in_window = [0] * self.m
+
+        # calcular el coste 
+        for act in range(len(self.sol)):
+            for i in range(self.m):
+                last = act - self.n_e[i]
+                if last >= 0:
+                    cars_in_window[i] -= self.classes[self.sol[last]][i]
+                cars_in_window[i] += self.classes[self.sol[act]][i]
+                cost += max(0, cars_in_window[i] - self.c_e[i])
+
+        # end_sol
+        # for act in range(len(self.sol), len(self.sol) + max(self.n_e)):
+        #     for i in range(self.m):
+        #         last = act - self.n_e[i]
+        #         if 0 <= last < len(self.sol):
+        #             cars_in_window[i] -= self.classes[self.sol[last]][i]
+        #         cost += max(0, cars_in_window[i] - self.c_e[i])
+
+        self.cars_in_window = cars_in_window
+        self.cost = cost
+
+        self.end_sol()
+    
+    def switch(self, x: int, y: int) -> None:
+        """
+        Intercambia la posicion x e y de la solucion parcial.
+        Actualiza self.cost y self.cars_in_window adecuadamente.
+        """
+        self.sol[x], self.sol[y] = self.sol[y], self.sol[x]
+        self.recaculate_cost()
+
+
     @property
     def m(self) -> int:
         """Devuelve el número total de mejoras."""
@@ -152,8 +195,7 @@ class GreedyConstructor:
     def k(self) -> int:
         """Devuelve el número total de clases."""
         return len(self.classes)
-        
-        
+
 def write_sol(sol: list[int], cost: int) -> None:
     """
     Escribe la solución dada junto con su coste y el tiempo de ejecución.
@@ -164,7 +206,7 @@ def write_sol(sol: list[int], cost: int) -> None:
     global start_time
     # Si no pones archivo de salida se escribe por pantalla
     if len(sys.argv) == 1:
-        print(cost, time() - start_time)
+        print(cost, round(time() - start_time, 1))
         print(" ".join(str(x) for x in sol))
 
     # Sino se sobreescribe el archivo de salida
@@ -173,19 +215,86 @@ def write_sol(sol: list[int], cost: int) -> None:
             print(cost, round(time() - start_time, 1),file=f)
             print(" ".join(str(x) for x in sol),file=f)
 
-
-def greedy_min_cost(g: GreedyConstructor) -> None:
-    """Construye una solución greedy (golosa), escogiendo en todo momento la clase con menor penalización.
-    Sobreescribe en el fichero indicado por línea de comandos la solución encontrada.
+def greedy_random_generator(s: GraspConstructor, alpha: float = 0.2) -> None:
     """
-    for _ in range(g.c):
-        candidates = {x: p for x, p in g.penalizations().items() if g.remaining_cars[x] > 0}
-        x = min(candidates, key = lambda i: candidates[i])
-        g.cooler_append(x)
-    g.end_sol()
+    Dado 's' únicamente con los datos iniciales del problema, construye una solución greedy
+    pero a cada paso escoge entre las alpha(%) mejores opciones.
+    """
+    for _ in range(s.c):
+        penalizations = s.penalizations()
+        candidates = list(penalizations.keys())
+        candidates.sort(key=lambda x: penalizations[x])
 
-    write_sol(g.sol, g.cost)
+        rand_x = random.choice(candidates[:math.ceil(len(candidates) * alpha)]) # escoger entre los alpha(%) mejores
+        s.cooler_append(rand_x)
+    s.end_sol()
 
+def simulated_annealing(s: GraspConstructor, t0: float = 10.0, iterations: int = 10_000, alpha: float = 0.999) -> None:
+    """
+    Dada una solución s previamente generada, la modifica mediante Simulated Annealing.
+    Tiene varios parámetros que se pueden modificar:
+
+    t0 (float): temperatura inicial
+    iterations (int): número de iteraciones que se realizarán
+    alpha (float): factor de escala de la temperatura en cada iteración
+    """
+    t = t0
+    k = 0
+    best_cost = s.cost
+    best_sol = s.sol[:]
+
+    while k < iterations:
+        # Definimos el vecindado como un switch entre dos posiciones (i, j)
+        i, j = random.choice(range(s.c)), random.choice(range(s.c))
+        if i == j:
+            continue
+        old_cost = s.cost
+        s.switch(i, j)
+        new_cost = s.cost
+
+        # Dos maneras de aceptar esta nueva solucion tras el switch: 1) El nuevo coste es mejor; 2) Por aleatoriedad
+        if new_cost <= old_cost or random.random() < math.exp(-(new_cost - old_cost) / t):
+            if new_cost < best_cost:
+                best_cost = new_cost
+                best_sol = s.sol[:]
+        else:
+            s.switch(i, j) # revertir el switch si no lo aceptamos
+
+        t *= alpha
+        k += 1
+
+    s.sol = best_sol[:]
+    s.cost = best_cost
+
+def grasp(c: int, m: int, k: int, c_e: list[int], n_e: list[int],
+          remaining_cars: list[int], classes: list[list[int]], max_iterations: Optional[int] = None) -> None:
+    """
+    Dados los datos del problema, aplica la metaheurística GRASP para resolverlo.
+    Si 'max_iterations' es None se aplican indefinidas iteraciones, alternativamente se hacen como
+    mucho 'max_iterations'.
+
+    No devuelve la mejor solución sino que sobreescribe en el fichero indicado por línea de comandos
+    la mejor solución encontrada hasta el momento.
+    """
+    global start_time
+    best_cost = sys.maxsize
+    i = 0
+
+    while time() - start_time < 60:
+        # Generar una solucion inicial aleaoria
+        s = GraspConstructor(c, m, k, c_e, n_e, remaining_cars, classes)
+        greedy_random_generator(s)
+
+        # Aplicar Simmulated Annealing a esa solución inical
+        simulated_annealing(s)
+
+        if s.cost < best_cost:
+            write_sol(s.sol, s.cost)
+            best_cost = s.cost
+            if best_cost == 0:
+                break
+        
+        i += 1
 
 def main() -> None:
 
@@ -203,8 +312,7 @@ def main() -> None:
         classes.append([read(int) for _ in range(m)])
 
     start_time = time()
-    g = GreedyConstructor(c, m, k, c_e, n_e, remaining_cars, classes)
-    greedy_min_cost(g)
+    grasp(c, m, k, c_e, n_e, remaining_cars, classes, 10)
 
 if __name__ == "__main__":
     main()

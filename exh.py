@@ -1,4 +1,3 @@
-#exhv2.py (la version nueva, la que funcionaba peor)
 import sys
 from time import time
 from yogi import read
@@ -25,8 +24,8 @@ class PartialSolution:
     coches con dicha mejora que hay actualmente en la ventana correspondiente
     rem_upgrades: para cada mejora i, rem_upgrades[i] representa el número total de 
     coches restantes que requieren esa mejora
-    
     """
+
     # Datos del problema
     c: int
     c_e: list[int]
@@ -43,16 +42,16 @@ class PartialSolution:
     rem_upgrades: list[int]
 
     def __init__(self, c: int, m: int, k: int, c_e: list[int], n_e: list[int],
-                 produccions: list[int], classes: list[list[int]]) -> None:
+                 remaining_cars: list[int], classes: list[list[int]]) -> None:
         self.c = c
         self.c_e = c_e
         self.n_e = n_e
-        self.remaining_cars = produccions[:]
+        self.remaining_cars = remaining_cars[:]
         self.classes = classes
         self.sol = []
         self.cost = 0
         self.cars_in_window = [0] * m
-        self.rem_upgrades = [sum(produccions[i]*classes[i][j] for i in range(k)) for j in range(m)]
+        self.rem_upgrades = [sum(remaining_cars[i]*classes[i][j] for i in range(k)) for j in range(m)]
 
     def cooler_append(self, x: int) -> None:
         """Añade un coche de clase x a la solucion parcial y actualiza las ventanas y los costes adecuadamente."""
@@ -136,11 +135,6 @@ class PartialSolution:
             else:
                 residual_positions = rest
 
-            # if full_window_positions == 0:
-            #     residual_positions = rest
-            # else:
-            #     residual_positions = -(self.n_e[i] - self.c_e[i]) if rest == 0 else rest
-
             lb += max(0, (full_window_positions + residual_positions) - rem_len)
 
         return lb
@@ -214,15 +208,15 @@ def main() -> None:
     c_e = [read(int) for _ in range(m)]
     n_e = [read(int) for _ in range(m)]
 
-    produccions = list[int]()
+    remaining_cars = list[int]()
     classes = list[list[int]]()
     for _ in range(k):
         _ = read(int)
-        produccions.append(read(int))
+        remaining_cars.append(read(int))
         classes.append([read(int) for _ in range(m)])
 
     start_time = time()
-    s = PartialSolution(c, m, k, c_e, n_e, produccions, classes)
+    s = PartialSolution(c, m, k, c_e, n_e, remaining_cars, classes)
     min_cost_rec(s, sys.maxsize, [])
 
 if __name__ == "__main__":
