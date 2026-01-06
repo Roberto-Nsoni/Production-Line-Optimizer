@@ -68,7 +68,10 @@ class GraspConstructor:
             self.risks.append(1 - p)
     
     def cooler_append(self, x: int) -> None:
-        """Añade un coche de clase x a la solucion parcial y actualiza las ventanas y los costes adecuadamente"""
+        """
+        Añade un coche de clase x a la solucion parcial y actualiza las ventanas
+        y los costes adecuadamente
+        """
         self.sol.append(x)
         self.remaining_cars[x] -= 1
         act = len(self.sol) - 1
@@ -86,7 +89,8 @@ class GraspConstructor:
 
     def penalizations(self) -> dict[int, float]:
         """
-        Asigna una penalización ponderada a cada clase teniendo en cuenta el estado actual de la solución.
+        Asigna una penalización ponderada a cada clase teniendo en cuenta el
+        estado actual de la solución.
         La penalización tiene en cuenta:
         - El coste de poner esa clase a continuación
         - El número de coches restantes de esa clase
@@ -132,7 +136,10 @@ class GraspConstructor:
         return penalization
     
     def end_sol(self) -> None:
-        """Termina de extender las ventanas hasta el final (sin añadir nuevos coches) y actualiza el coste de la solución."""
+        """
+        Termina de extender las ventanas hasta el final (sin añadir nuevos coches)
+        y actualiza el coste de la solución.
+        """
         x_in_window = self.cars_in_window[:]
 
         # Avanza desde el final de la solución hasta el final de la ventana más grande
@@ -151,7 +158,6 @@ class GraspConstructor:
         Recalcula el coste total de toda la solucion (incluido el end_sol).
         Actualiza self.cost y self.cars_in_window adecuadamente.
         """
-
         cost = 0
         cars_in_window = [0] * self.m
 
@@ -188,13 +194,13 @@ class GraspConstructor:
         """Devuelve el número total de clases."""
         return len(self.classes)
 
+
 def write_sol(sol: list[int], cost: int) -> None:
     """
     Escribe la solución dada junto con su coste y el tiempo de ejecución.
     Escribe esta solución por pantalla o en un archivo en función de si este último
     se ha especificado a través de la línea de comandos.
     """
-
     global start_time
     # Si no pones archivo de salida se escribe por pantalla
     if len(sys.argv) == 1:
@@ -206,6 +212,7 @@ def write_sol(sol: list[int], cost: int) -> None:
         with open(sys.argv[1],"w") as f:    
             print(cost, round(time() - start_time, 1),file=f)
             print(" ".join(str(x) for x in sol),file=f)
+
 
 def greedy_random_generator(s: GraspConstructor, alpha: float = 0.2) -> None:
     """
@@ -303,7 +310,7 @@ def main() -> None:
         classes.append([read(int) for _ in range(m)])
 
     start_time = time()
-    grasp(c, m, k, c_e, n_e, remaining_cars, classes, 10)
+    grasp(c, m, k, c_e, n_e, remaining_cars, classes)
 
 if __name__ == "__main__":
     main()

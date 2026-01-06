@@ -4,11 +4,11 @@ import os
 from time import time
 
 ### MODIFICAR LAS COSTANTES DE ABAJO SEGUN CONVENGA ###
-TEST_FILE = "mh_copy"  # Archivo que se quiera provar .py (o vacío para codon)
-OPT_FILE = "results_mh1min.txt"  # Archivo con resultados
+TEST_FILE = "exh"  # Archivo que se quiera provar .py (o sin extensión para codon)
+OPT_FILE = "results_exh.txt"  # Archivo con resultados
 INSTANCES = (
-    # [f"public_benchs/easy-{i}.txt" for i in range(1, 11)] +
-    # [f"public_benchs/med-{i}.txt" for i in range(1, 11)] +
+    [f"public_benchs/easy-{i}.txt" for i in range(1, 11)] +
+    [f"public_benchs/med-{i}.txt" for i in range(1, 11)] +
     [f"public_benchs/hard-{i}.txt" for i in range(1, 21)]
 )
 

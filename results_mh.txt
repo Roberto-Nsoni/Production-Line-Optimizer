@@ -1,240 +1,40 @@
-public_benchs/easy-1.txt 	14	14	14
-public_benchs/easy-2.txt 	0	0	0
-public_benchs/easy-3.txt 	15	15	15
-public_benchs/easy-4.txt 	0	0	0
-public_benchs/easy-5.txt 	0	0	0
-public_benchs/easy-6.txt 	5	5	5
-public_benchs/easy-7.txt 	0	0	0
-public_benchs/easy-8.txt 	3	3	3
-public_benchs/easy-9.txt 	10	10	10
-public_benchs/easy-10.txt 	1	1	1
-public_benchs/med-1.txt 	9	9	9
-public_benchs/med-2.txt 	15	15	15
-public_benchs/med-3.txt 	38	38	38
-public_benchs/med-4.txt 	25	25	25
-public_benchs/med-5.txt 	16	16	16
-public_benchs/med-6.txt 	25	25	25
-public_benchs/med-7.txt 	14	14	14
-public_benchs/med-8.txt 	10	10	10
-public_benchs/med-9.txt 	12	12	12
-public_benchs/med-10.txt 	9	9	9
-public_benchs/hard-1.txt 	13	13	13
-public_benchs/hard-2.txt 	0	0	0
-public_benchs/hard-3.txt 	0	0	0
-public_benchs/hard-4.txt 	7	7	6
-public_benchs/hard-5.txt 	66	66	59
-public_benchs/hard-6.txt 	0	0	0
-public_benchs/hard-7.txt 	0	0	0
-public_benchs/hard-8.txt 	0	0	0
-public_benchs/hard-9.txt 	138	141	140
-public_benchs/hard-10.txt 	0	0	0
-public_benchs/hard-11.txt 	5	9	4
-public_benchs/hard-12.txt 	5	8	5
-public_benchs/hard-13.txt 	31	32	31
-public_benchs/hard-14.txt 	12	13	13
-public_benchs/hard-15.txt 	0	2	0
-public_benchs/hard-16.txt 	108	108	91
-public_benchs/hard-17.txt 	11	11	9
-public_benchs/hard-18.txt 	2	4	4
-public_benchs/hard-19.txt 	0	0	0
-public_benchs/hard-20.txt 	25	26	17
-public_benchs/extra-1.txt 	17
-public_benchs/extra-2.txt 	17
-public_benchs/extra-3.txt 	17
-public_benchs/extra-4.txt 	17
-public_benchs/extra-5.txt 	17
-public_benchs/extra-6.txt 	17
-public_benchs/extra-7.txt 	17
-public_benchs/extra-8.txt 	17
-public_benchs/extra-9.txt 	17
-public_benchs/extra-10.txt 	17
-public_benchs/extra-11.txt 	17
-public_benchs/extra-12.txt 	17
-public_benchs/extra-13.txt 	17
-public_benchs/extra-14.txt 	17
-public_benchs/extra-15.txt 	17
-public_benchs/extra-16.txt 	17
-public_benchs/extra-17.txt 	17
-public_benchs/extra-18.txt 	17
-public_benchs/extra-19.txt 	17
-public_benchs/extra-20.txt 	17
-public_benchs/extra-21.txt 	17
-public_benchs/extra-22.txt 	17
-public_benchs/extra-23.txt 	17
-public_benchs/extra-24.txt 	17
-public_benchs/extra-25.txt 	17
-public_benchs/extra-26.txt 	17
-public_benchs/extra-27.txt 	17
-public_benchs/extra-28.txt 	17
-public_benchs/extra-29.txt 	17
-public_benchs/extra-30.txt 	17
-public_benchs/extra-31.txt 	17
-public_benchs/extra-32.txt 	17
-public_benchs/extra-33.txt 	17
-public_benchs/extra-34.txt 	17
-public_benchs/extra-35.txt 	17
-public_benchs/extra-36.txt 	17
-public_benchs/extra-37.txt 	17
-public_benchs/extra-38.txt 	17
-public_benchs/extra-39.txt 	17
-public_benchs/extra-40.txt 	17
-public_benchs/extra-41.txt 	17
-public_benchs/extra-42.txt 	17
-public_benchs/extra-43.txt 	17
-public_benchs/extra-44.txt 	17
-public_benchs/extra-45.txt 	17
-public_benchs/extra-46.txt 	17
-public_benchs/extra-47.txt 	17
-public_benchs/extra-48.txt 	17
-public_benchs/extra-49.txt 	17
-public_benchs/extra-50.txt 	17
-public_benchs/extra-51.txt 	17
-public_benchs/extra-52.txt 	17
-public_benchs/extra-53.txt 	17
-public_benchs/extra-54.txt 	17
-public_benchs/extra-55.txt 	17
-public_benchs/extra-56.txt 	17
-public_benchs/extra-57.txt 	17
-public_benchs/extra-58.txt 	17
-public_benchs/extra-59.txt 	17
-public_benchs/extra-60.txt 	17
-public_benchs/extra-61.txt 	17
-public_benchs/extra-62.txt 	17
-public_benchs/extra-63.txt 	17
-public_benchs/extra-64.txt 	17
-public_benchs/extra-65.txt 	17
-public_benchs/extra-66.txt 	17
-public_benchs/extra-67.txt 	17
-public_benchs/extra-68.txt 	17
-public_benchs/extra-69.txt 	17
-public_benchs/extra-70.txt 	17
-public_benchs/extra-71.txt 	17
-public_benchs/extra-72.txt 	17
-public_benchs/extra-73.txt 	17
-public_benchs/extra-74.txt 	17
-public_benchs/extra-75.txt 	17
-public_benchs/extra-76.txt 	17
-public_benchs/extra-77.txt 	17
-public_benchs/extra-78.txt 	17
-public_benchs/extra-79.txt 	17
-public_benchs/extra-80.txt 	17
-public_benchs/extra-81.txt 	17
-public_benchs/extra-82.txt 	17
-public_benchs/extra-83.txt 	17
-public_benchs/extra-84.txt 	17
-public_benchs/extra-85.txt 	17
-public_benchs/extra-86.txt 	17
-public_benchs/extra-87.txt 	17
-public_benchs/extra-88.txt 	17
-public_benchs/extra-89.txt 	17
-public_benchs/extra-90.txt 	17
-public_benchs/extra-91.txt 	17
-public_benchs/extra-92.txt 	17
-public_benchs/extra-93.txt 	17
-public_benchs/extra-94.txt 	17
-public_benchs/extra-95.txt 	17
-public_benchs/extra-96.txt 	17
-public_benchs/extra-97.txt 	17
-public_benchs/extra-98.txt 	17
-public_benchs/extra-99.txt 	17
-public_benchs/extra-100.txt 	17
-public_benchs/extra-101.txt 	17
-public_benchs/extra-102.txt 	17
-public_benchs/extra-103.txt 	17
-public_benchs/extra-104.txt 	17
-public_benchs/extra-105.txt 	17
-public_benchs/extra-106.txt 	17
-public_benchs/extra-107.txt 	17
-public_benchs/extra-108.txt 	17
-public_benchs/extra-109.txt 	17
-public_benchs/extra-110.txt 	17
-public_benchs/extra-111.txt 	17
-public_benchs/extra-112.txt 	17
-public_benchs/extra-113.txt 	17
-public_benchs/extra-114.txt 	17
-public_benchs/extra-115.txt 	17
-public_benchs/extra-116.txt 	17
-public_benchs/extra-117.txt 	17
-public_benchs/extra-118.txt 	17
-public_benchs/extra-119.txt 	17
-public_benchs/extra-120.txt 	17
-public_benchs/extra-121.txt 	17
-public_benchs/extra-122.txt 	17
-public_benchs/extra-123.txt 	17
-public_benchs/extra-124.txt 	17
-public_benchs/extra-125.txt 	17
-public_benchs/extra-126.txt 	17
-public_benchs/extra-127.txt 	17
-public_benchs/extra-128.txt 	17
-public_benchs/extra-129.txt 	17
-public_benchs/extra-130.txt 	17
-public_benchs/extra-131.txt 	17
-public_benchs/extra-132.txt 	17
-public_benchs/extra-133.txt 	17
-public_benchs/extra-134.txt 	17
-public_benchs/extra-135.txt 	17
-public_benchs/extra-136.txt 	17
-public_benchs/extra-137.txt 	17
-public_benchs/extra-138.txt 	17
-public_benchs/extra-139.txt 	17
-public_benchs/extra-140.txt 	17
-public_benchs/extra-141.txt 	17
-public_benchs/extra-142.txt 	17
-public_benchs/extra-143.txt 	17
-public_benchs/extra-144.txt 	17
-public_benchs/extra-145.txt 	17
-public_benchs/extra-146.txt 	17
-public_benchs/extra-147.txt 	17
-public_benchs/extra-148.txt 	17
-public_benchs/extra-149.txt 	17
-public_benchs/extra-150.txt 	17
-public_benchs/extra-151.txt 	17
-public_benchs/extra-152.txt 	17
-public_benchs/extra-153.txt 	17
-public_benchs/extra-154.txt 	17
-public_benchs/extra-155.txt 	17
-public_benchs/extra-156.txt 	17
-public_benchs/extra-157.txt 	17
-public_benchs/extra-158.txt 	17
-public_benchs/extra-159.txt 	17
-public_benchs/extra-160.txt 	17
-public_benchs/extra-161.txt 	17
-public_benchs/extra-162.txt 	17
-public_benchs/extra-163.txt 	17
-public_benchs/extra-164.txt 	17
-public_benchs/extra-165.txt 	17
-public_benchs/extra-166.txt 	17
-public_benchs/extra-167.txt 	17
-public_benchs/extra-168.txt 	17
-public_benchs/extra-169.txt 	17
-public_benchs/extra-170.txt 	17
-public_benchs/extra-171.txt 	17
-public_benchs/extra-172.txt 	17
-public_benchs/extra-173.txt 	17
-public_benchs/extra-174.txt 	17
-public_benchs/extra-175.txt 	17
-public_benchs/extra-176.txt 	17
-public_benchs/extra-177.txt 	17
-public_benchs/extra-178.txt 	17
-public_benchs/extra-179.txt 	17
-public_benchs/extra-180.txt 	17
-public_benchs/extra-181.txt 	17
-public_benchs/extra-182.txt 	17
-public_benchs/extra-183.txt 	17
-public_benchs/extra-184.txt 	17
-public_benchs/extra-185.txt 	17
-public_benchs/extra-186.txt 	17
-public_benchs/extra-187.txt 	17
-public_benchs/extra-188.txt 	17
-public_benchs/extra-189.txt 	17
-public_benchs/extra-190.txt 	17
-public_benchs/extra-191.txt 	17
-public_benchs/extra-192.txt 	17
-public_benchs/extra-193.txt 	17
-public_benchs/extra-194.txt 	17
-public_benchs/extra-195.txt 	17
-public_benchs/extra-196.txt 	17
-public_benchs/extra-197.txt 	17
-public_benchs/extra-198.txt 	17
-public_benchs/extra-199.txt 	17
-public_benchs/extra-200.txt 	17
+public_benchs/easy-1.txt 	14
+public_benchs/easy-2.txt 	0
+public_benchs/easy-3.txt 	15
+public_benchs/easy-4.txt 	0
+public_benchs/easy-5.txt 	0
+public_benchs/easy-6.txt 	5
+public_benchs/easy-7.txt 	0
+public_benchs/easy-8.txt 	3
+public_benchs/easy-9.txt 	10
+public_benchs/easy-10.txt 	1
+public_benchs/med-1.txt 	9
+public_benchs/med-2.txt 	15
+public_benchs/med-3.txt 	38
+public_benchs/med-4.txt 	25
+public_benchs/med-5.txt 	16
+public_benchs/med-6.txt 	25
+public_benchs/med-7.txt 	14
+public_benchs/med-8.txt 	10
+public_benchs/med-9.txt 	12
+public_benchs/med-10.txt 	9
+public_benchs/hard-1.txt 	9
+public_benchs/hard-2.txt 	0
+public_benchs/hard-3.txt 	0
+public_benchs/hard-4.txt 	5
+public_benchs/hard-5.txt 	50
+public_benchs/hard-6.txt 	0
+public_benchs/hard-7.txt 	0
+public_benchs/hard-8.txt 	0
+public_benchs/hard-9.txt 	135
+public_benchs/hard-10.txt 	0
+public_benchs/hard-11.txt 	2
+public_benchs/hard-12.txt 	3
+public_benchs/hard-13.txt 	29
+public_benchs/hard-14.txt 	7
+public_benchs/hard-15.txt 	0
+public_benchs/hard-16.txt 	89
+public_benchs/hard-17.txt 	7
+public_benchs/hard-18.txt 	3
+public_benchs/hard-19.txt 	0
+public_benchs/hard-20.txt 	16

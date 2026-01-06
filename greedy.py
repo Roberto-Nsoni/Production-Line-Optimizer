@@ -66,7 +66,10 @@ class GreedyConstructor:
             
 
     def cooler_append(self, x: int) -> None:
-        """Añade un coche de clase x a la solucion parcial y actualiza las ventanas y los costes adecuadamente"""
+        """
+        Añade un coche de clase x a la solucion parcial y actualiza las ventanas
+        y los costes adecuadamente
+        """
         self.sol.append(x)
         self.remaining_cars[x] -= 1
         act = len(self.sol) - 1
@@ -84,7 +87,8 @@ class GreedyConstructor:
 
     def penalizations(self) -> dict[int, float]:
         """
-        Asigna una penalización ponderada a cada clase teniendo en cuenta el estado actual de la solución.
+        Asigna una penalización ponderada a cada clase teniendo en cuenta el
+        estado actual de la solución.
         La penalización tiene en cuenta:
         - El coste de poner esa clase a continuación
         - El número de coches restantes de esa clase
@@ -130,7 +134,10 @@ class GreedyConstructor:
         return penalization
     
     def end_sol(self) -> None:
-        """Termina de extender las ventanas hasta el final (sin añadir nuevos coches) y actualiza el coste de la solución."""
+        """
+        Termina de extender las ventanas hasta el final (sin añadir nuevos coches)
+        y actualiza el coste de la solución.
+        """
         x_in_window = self.cars_in_window[:]
 
         # Avanza desde el final de la solución hasta el final de la ventana más grande
@@ -160,11 +167,10 @@ def write_sol(sol: list[int], cost: int) -> None:
     Escribe esta solución por pantalla o en un archivo en función de si este último
     se ha especificado a través de la línea de comandos.
     """
-
     global start_time
     # Si no pones archivo de salida se escribe por pantalla
     if len(sys.argv) == 1:
-        print(cost, time() - start_time)
+        print(cost, round(time() - start_time, 1))
         print(" ".join(str(x) for x in sol))
 
     # Sino se sobreescribe el archivo de salida
@@ -175,7 +181,8 @@ def write_sol(sol: list[int], cost: int) -> None:
 
 
 def greedy_min_cost(g: GreedyConstructor) -> None:
-    """Construye una solución greedy (golosa), escogiendo en todo momento la clase con menor penalización.
+    """
+    Construye una solución greedy (golosa), escogiendo en todo momento la clase con menor penalización.
     Sobreescribe en el fichero indicado por línea de comandos la solución encontrada.
     """
     for _ in range(g.c):

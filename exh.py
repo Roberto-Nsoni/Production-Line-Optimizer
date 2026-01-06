@@ -54,8 +54,10 @@ class PartialSolution:
         self.rem_upgrades = [sum(remaining_cars[i]*classes[i][j] for i in range(k)) for j in range(m)]
 
     def cooler_append(self, x: int) -> None:
-        """Añade un coche de clase x a la solucion parcial y actualiza las ventanas y los costes adecuadamente."""
-
+        """
+        Añade un coche de clase x a la solucion parcial y actualiza las ventanas
+        y los costes adecuadamente.
+        """
         self.sol.append(x)
         act = len(self.sol) - 1
         for i in range(self.m):
@@ -72,8 +74,10 @@ class PartialSolution:
             self.cost += max(0, self.cars_in_window[i] - self.c_e[i])
     
     def cooler_pop(self) -> None:
-        """Elimina el último elemento de la solucion parcial y actualiza las ventanas y los costes adecuadamente."""
-
+        """
+        Elimina el último elemento de la solucion parcial y actualiza las ventanas
+        y los costes adecuadamente.
+        """
         x = self.sol[-1]
         act = len(self.sol) - 1
         for i in range(self.m):
@@ -92,8 +96,10 @@ class PartialSolution:
         self.sol.pop()
     
     def end_sol(self) -> int:
-        """Termina de extender las ventanas hasta el final (sin añadir nuevos coches) y devuelve su coste añadido."""
-
+        """
+        Termina de extender las ventanas hasta el final (sin añadir nuevos coches)
+        y devuelve su coste añadido.
+        """
         cars_in_window = self.cars_in_window[:]
         added_cost = 0
 
@@ -157,11 +163,10 @@ def write_sol(sol: list[int], cost: int) -> None:
     Escribe esta solución por pantalla o en un archivo en función de si este último
     se ha especificado a través de la línea de comandos.
     """
-
     global start_time
     # Si no pones archivo de salida se escribe por pantalla
     if len(sys.argv) == 1:
-        print(cost, time() - start_time)
+        print(cost, round(time() - start_time, 1))
         print(" ".join(str(x) for x in sol))
 
     # Sino se sobreescribe el archivo de salida
@@ -171,14 +176,12 @@ def write_sol(sol: list[int], cost: int) -> None:
             print(" ".join(str(x) for x in sol),file=f)
 
 
-
 def min_cost_rec(s: PartialSolution, best_cost: int, best_sol: list[int]) -> tuple[int, list[int]]:
     """
     Calcula de forma exhaustiva la mejor solución para el problema dada una solución parcial s.
     Sobreescribe en el fichero indicado por línea de comandos la mejor solución encontrada hasta el momento.
     Devuelve la distribución de coches de dicha soución y su coste.
     """
-
     if len(s.sol) == s.c:
         final_cost = s.cost + s.end_sol()
         if final_cost < best_cost:
