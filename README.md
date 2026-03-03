@@ -49,7 +49,7 @@ To ensure a solution is valid (correct format and consistent cost), use the prov
 *Note: The checker validates correctness, not optimality.*
 
 ### 2. Automated Benchmark Script (`test.py`)
-I developed a comprehensive testing utility that automates the evaluation of any algorithm across multiple public benchmarks:
+We developed a comprehensive testing utility that automates the evaluation of any algorithm across multiple public benchmarks:
 - **Automatic Validation:** Runs the algorithm and immediately pipes it through the `checker`.
 - **Performance Tracking:** Logs execution time and calculates cost averages.
 - **Result Comparison:** Maintains a record of costs found in `public_benchs/` (easy, medium, and hard instances) to track progress.
